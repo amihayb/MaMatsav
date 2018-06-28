@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "335096027121",
+    "firebase_url": "https://mamatsav-53669.firebaseio.com",
+    "project_id": "mamatsav-53669",
+    "storage_bucket": "mamatsav-53669.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:335096027121:android:e2198d1d697eebf8",
+        "android_client_info": {
+          "package_name": "nest.turtles.com.mamatsav"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "335096027121-tsbt7m75cv5nsfm1nagstctbmgqvl6es.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "nest.turtles.com.mamatsav",
+            "certificate_hash": "ec796259b5da65192e1e603e9f2839ad92cf541f"
+          }
+        },
+        {
+          "client_id": "335096027121-0dngd9vk3u980bomghs82vdmoan6g9tg.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDMDsGqfeFOwIiDRFUWKWRvrmMNX1RJnus"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "335096027121-0dngd9vk3u980bomghs82vdmoan6g9tg.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
