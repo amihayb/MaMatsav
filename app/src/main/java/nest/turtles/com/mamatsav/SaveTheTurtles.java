@@ -21,6 +21,8 @@ import com.google.firebase.database.ValueEventListener;
 
 public class SaveTheTurtles extends AppCompatActivity {
 
+    static String preState = "1";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,7 +31,10 @@ public class SaveTheTurtles extends AppCompatActivity {
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         final DatabaseReference myRef = database.getReference("nest1");
 
-        //myRef.setValue("Hello, World!");
+        // Init values
+        myRef.child("dismissed").setValue("0");
+        myRef.child("emerged").setValue("0");
+        myRef.child("hatchState").setValue("1");
 
         // Read from the database
         myRef.addValueEventListener(new ValueEventListener() {
@@ -37,13 +42,13 @@ public class SaveTheTurtles extends AppCompatActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 // This method is called once with the initial value and again
                 // whenever data at this location is updated.
-                String value = dataSnapshot.child("isHetched").getValue(String.class);
+                String emerged = dataSnapshot.child("emerged").getValue(String.class);
+                String dismissed = dataSnapshot.child("dismissed").getValue(String.class);
                 //((TextView)findViewById(R.id.TextView_textHello)).setText(value);
-                Log.i("amihay", "Value is: " + value);
+                Log.i("amihay", "emerged is: " + emerged);
 
-                if (value.equals("1")){
+                if (emerged.equals("1") && dismissed.equals("0")){
                     ((ImageView)findViewById(R.id.imageView_hatch)).setVisibility(View.VISIBLE);
-
                     //Uri notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
                     //Ringtone r = RingtoneManager.getRingtone(getApplicationContext(), notification);
                     //r.play();
@@ -53,12 +58,65 @@ public class SaveTheTurtles extends AppCompatActivity {
                 else{
                     ((ImageView)findViewById(R.id.imageView_hatch)).setVisibility(View.INVISIBLE);
                 }
-            }
+
+                String hatchState = dataSnapshot.child("hatchState").getValue(String.class);
+
+                //if (!hatchState.equals(preState)) {
+                    //Log.i("amihay", "hatch state" + preState);
+                    //preState = hatchState;
+                    if ( hatchState.equals("1") )
+                        ((ImageView) findViewById(R.id.imageView_status)).setImageResource(R.drawable.screen1);
+                    else if ( hatchState.equals("2") )
+                        ((ImageView) findViewById(R.id.imageView_status)).setImageResource(R.drawable.screen2);
+                    else if ( hatchState.equals("3") )
+                        ((ImageView) findViewById(R.id.imageView_status)).setImageResource(R.drawable.screen3);
+                    else if ( hatchState.equals("4") )
+                        ((ImageView) findViewById(R.id.imageView_status)).setImageResource(R.drawable.screen4);
+                    else if ( hatchState.equals("5") )
+                        ((ImageView) findViewById(R.id.imageView_status)).setImageResource(R.drawable.screen5);
+
+                    /*switch (hatchState) {
+                        case "1":
+                            ((ImageView) findViewById(R.id.imageView_status)).setImageResource(R.drawable.screen1);
+                            break;
+
+                        case "2":
+                            ((ImageView) findViewById(R.id.imageView_status)).setImageResource(R.drawable.screen2);
+                            break;
+
+                        case "3":
+                            ((ImageView) findViewById(R.id.imageView_status)).setImageResource(R.drawable.screen3);
+                            break;
+
+                        case "4":
+                            ((ImageView) findViewById(R.id.imageView_status)).setImageResource(R.drawable.screen4);
+                            break;
+
+                        case "5":
+                            ((ImageView) findViewById(R.id.imageView_status)).setImageResource(R.drawable.screen5);
+                            break;
+                    }*/
+                    //Log.i("amihay", "hatch state changed");
+                }
+
 
             @Override
             public void onCancelled(DatabaseError error) {
                 // Failed to read value
                 //Log.w(TAG, "Failed to read value.", error.toException());
+            }
+        });
+
+        final ImageView imgClick = (ImageView)findViewById(R.id.imageView_hatch);
+
+        imgClick.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                myRef.child("dismissed").setValue("1");
+                Log.i("amihay", "dismissed clicked");
+                //imgClick.setVisibility(View.INVISIBLE);
+
             }
         });
     };
