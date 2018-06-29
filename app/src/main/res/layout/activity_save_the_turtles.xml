@@ -9,14 +9,12 @@
     <ImageView
         android:id="@+id/imageView_status"
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:visibility="visible"
-        app:srcCompat="@drawable/screen1" />
+        android:layout_height="fill_parent" />
 
     <ImageView
         android:id="@+id/imageView_hatch"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="300dp"
+        android:layout_height="500dp"
         android:visibility="invisible"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"

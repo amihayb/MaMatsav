@@ -19,14 +19,26 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import nest.turtles.com.mamatsav.glide.GlideApp;
+import nest.turtles.com.mamatsav.glide.GlideRequests;
+
 public class SaveTheTurtles extends AppCompatActivity {
 
     static String preState = "1";
+
+    private GlideRequests glide;
+
+    private ImageView statusImageView;
+    private ImageView hatchImageView;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_save_the_turtles);
+
+        statusImageView = findViewById(R.id.imageView_status);
+        hatchImageView = findViewById(R.id.imageView_hatch);
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         final DatabaseReference myRef = database.getReference("nest1");
@@ -35,6 +47,11 @@ public class SaveTheTurtles extends AppCompatActivity {
         myRef.child("dismissed").setValue("0");
         myRef.child("emerged").setValue("0");
         myRef.child("hatchState").setValue("1");
+
+        glide = GlideApp.with(this);
+        glide
+                .load(R.drawable.screen1)
+                .into(statusImageView);
 
         // Read from the database
         myRef.addValueEventListener(new ValueEventListener() {
@@ -47,57 +64,52 @@ public class SaveTheTurtles extends AppCompatActivity {
                 //((TextView)findViewById(R.id.TextView_textHello)).setText(value);
                 Log.i("amihay", "emerged is: " + emerged);
 
-                if (emerged.equals("1") && dismissed.equals("0")){
-                    ((ImageView)findViewById(R.id.imageView_hatch)).setVisibility(View.VISIBLE);
+                if (emerged.equals("1") && dismissed.equals("0")) {
+                    hatchImageView.setVisibility(View.VISIBLE);
                     //Uri notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
                     //Ringtone r = RingtoneManager.getRingtone(getApplicationContext(), notification);
                     //r.play();
                     //Define Notification Manager
                     notifyMe();
-                }
-                else{
-                    ((ImageView)findViewById(R.id.imageView_hatch)).setVisibility(View.INVISIBLE);
+                } else {
+                    hatchImageView.setVisibility(View.INVISIBLE);
                 }
 
                 String hatchState = dataSnapshot.child("hatchState").getValue(String.class);
 
                 //if (!hatchState.equals(preState)) {
-                    Log.i("amihay", "hatch state" + preState);
-                    //preState = hatchState;
-                    if ( hatchState.equals("1") )
-                        ((ImageView) findViewById(R.id.imageView_status)).setImageResource(R.drawable.screen1);
-                    else if ( hatchState.equals("2") )
-                        ((ImageView) findViewById(R.id.imageView_status)).setImageResource(R.drawable.screen2);
-                    else if ( hatchState.equals("3") )
-                        ((ImageView) findViewById(R.id.imageView_status)).setImageResource(R.drawable.screen3);
-                    else if ( hatchState.equals("4") )
-                        ((ImageView) findViewById(R.id.imageView_status)).setImageResource(R.drawable.screen4);
-                    else if ( hatchState.equals("5") )
-                        ((ImageView) findViewById(R.id.imageView_status)).setImageResource(R.drawable.screen5);
+                Log.i("amihay", "hatch state" + preState);
+                //preState = hatchState;
+                int image = R.drawable.screen1;
 
-                    /*switch (hatchState) {
+                    switch (hatchState) {
                         case "1":
-                            ((ImageView) findViewById(R.id.imageView_status)).setImageResource(R.drawable.screen1);
+                            image = R.drawable.screen1;
+
                             break;
 
                         case "2":
-                            ((ImageView) findViewById(R.id.imageView_status)).setImageResource(R.drawable.screen2);
+                            image = R.drawable.screen2;
                             break;
 
                         case "3":
-                            ((ImageView) findViewById(R.id.imageView_status)).setImageResource(R.drawable.screen3);
+                            image = R.drawable.screen3;
                             break;
 
                         case "4":
-                            ((ImageView) findViewById(R.id.imageView_status)).setImageResource(R.drawable.screen4);
+                            image = R.drawable.screen4;
                             break;
 
                         case "5":
-                            ((ImageView) findViewById(R.id.imageView_status)).setImageResource(R.drawable.screen5);
+                            image = R.drawable.screen5;
                             break;
-                    }*/
-                    //Log.i("amihay", "hatch state changed");
-                }
+                    }
+
+                    glide.load(image)
+                            .into(statusImageView);
+
+                //Log.i("amihay", "hatch state changed");
+            }
 
 
             @Override
@@ -107,9 +119,7 @@ public class SaveTheTurtles extends AppCompatActivity {
             }
         });
 
-        final ImageView imgClick = (ImageView)findViewById(R.id.imageView_hatch);
-
-        imgClick.setOnClickListener(new View.OnClickListener() {
+        hatchImageView.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
@@ -119,7 +129,9 @@ public class SaveTheTurtles extends AppCompatActivity {
 
             }
         });
-    };
+    }
+
+    ;
 
     /*public void sendNotification() {
 
