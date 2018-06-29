@@ -5,7 +5,7 @@ import time
 
 from firebase import firebase
 
-fb = firebase.FirebaseApplication('https://turtles1-f2554.firebaseio.com/', None)
+fb = firebase.FirebaseApplication('https://mamatsav-53669.firebaseio.com/', None)
 
 cap = cv2.VideoCapture(0)
 # initialize the first frame in the video stream
@@ -55,7 +55,7 @@ while(True):
         cv2.rectangle(frame, (x, y), (x + w, y + h), (0, 255, 0), 2)
         text = "Yes"
         if (firstTurtle):
-            fb.put('/nest1/','isHetched','1') #"path","property_Name",property_Value    
+            fb.put('/nest1/','emerged','1') #"path","property_Name",property_Value    
     
     cv2.putText(frame, "Movement: {}".format(text), (10, 200),
                 cv2.FONT_HERSHEY_SIMPLEX, 2, (1, 1, 1), lineType=cv2.LINE_AA)
