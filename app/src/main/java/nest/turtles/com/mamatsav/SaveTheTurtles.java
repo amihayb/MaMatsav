@@ -62,7 +62,7 @@ public class SaveTheTurtles extends AppCompatActivity {
                 String hatchState = dataSnapshot.child("hatchState").getValue(String.class);
 
                 //if (!hatchState.equals(preState)) {
-                    //Log.i("amihay", "hatch state" + preState);
+                    Log.i("amihay", "hatch state" + preState);
                     //preState = hatchState;
                     if ( hatchState.equals("1") )
                         ((ImageView) findViewById(R.id.imageView_status)).setImageResource(R.drawable.screen1);
